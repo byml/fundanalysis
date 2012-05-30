@@ -1,0 +1,31 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="default" extends="struts-default">
+
+
+		<action name="allFundsFinder" class="byml.fundanalysis.action.AllFundsFinder"
+			method="execute">
+
+			<result name="success">/fundanalysis/fundsinfo.jsp</result>
+
+		</action>
+
+		<action name="*FundUpdate" class="byml.fundanalysis.action.FundUpdater"
+			method="{1}">
+
+			<result name="input">/fundanalysis/inputfundupdate.jsp</result>
+			<result name="success">/fundanalysis/fundupdated.jsp</result>
+
+		</action>
+	</package>
+
+	<package name="json" extends="struts-default,json-default">
+		<action name="displayFund" class="displayFundClass">
+			<result name="success" type="json"></result>
+		</action>
+	</package>
+
+</struts> 
