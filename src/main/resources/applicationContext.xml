@@ -3,6 +3,7 @@
 	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation="
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -13,11 +14,15 @@
             http://www.springframework.org/schema/jdbc
             http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
             http://www.springframework.org/schema/context
-            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd            
+            http://www.springframework.org/schema/data/jpa 
+            http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 	<!-- scans the classpath for annotated components (including @Repostory 
 		and @Service that will be auto-registered as Spring beans -->
-	<context:component-scan base-package="byml" />
+	<context:component-scan base-package="net.byml.*" />
+
+	<jpa:repositories base-package="net.byml.*.repository" />
 
 	<!-- methods or classes needing to run in a complete transaction will be 
 		annotated with Transactional -->
@@ -25,13 +30,13 @@
 
 	<!-- Creates a data source that can provide a connection to in-memory embedded 
 		database populated with test data see: http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/ch12s08.html -->
-    <bean id="dataSource"
-        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost/fund_analysis" />
-        <property name="username" value="root" />
-        <property name="password" value="root" />
-    </bean>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost/fund_analysis" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
 
 
 	<!-- This will ensure that hibernate or jpa exceptions are automatically 
@@ -42,10 +47,10 @@
 
 	<!-- JPA Entity Manager Factory -->
 	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-		p:dataSource-ref="dataSource" p:persistenceXmlLocation="META-INF/persistence.xml"
-		p:persistenceUnitName="springJpaPersistenceUnit" />
-
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceUnitName" value="springJpaPersistenceUnit" />
+	</bean>
 
 	<!-- bean post-processor for JPA annotations -->
 	<bean
@@ -58,14 +63,4 @@
 
 	<!-- use declarative transaction management -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	
-	<bean id="defaultFund" class="byml.fundanalysis.model.Fund">
-		<property name="code" value="CCCCCCCCCCCCCC"/>
-		<property name="fullName" value="FFFFFFFFFFFFF"/>
-	</bean>
-	
-	<bean id="displayFundClass" class="byml.fundanalysis.action.DisplayFund">
-		<property name="fund" ref="defaultFund"/>
-	</bean>
-
 </beans>

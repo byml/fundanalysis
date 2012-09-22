@@ -1,0 +1,27 @@
+package net.byml.fundanalysis.serivce;
+
+import net.byml.fundanalysis.model.Fund;
+
+public interface FundService {
+	Fund findById(Long id);
+
+	Fund findByCode(String code);
+
+	Iterable<Fund> findByIds(Iterable<Long> ids);
+
+	/**
+	 * Remove the associated Fund record from the data repository.
+	 * 
+	 * @param fund
+	 */
+	void delete(Fund fund);
+
+	/**
+	 * Save the state of the provided Fund object into the data repository.
+	 * 
+	 * @param fund
+	 */
+	void save(Fund fund);
+
+	Iterable<Fund> findAll();
+}

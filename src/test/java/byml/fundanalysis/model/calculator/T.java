@@ -2,9 +2,10 @@ package byml.fundanalysis.model.calculator;
 
 import java.util.Date;
 
+import net.byml.util.DateUtil;
+
 import org.junit.Test;
 
-import byml.util.DateUtil;
 
 public class T {
 	// 固定利率固定期限
