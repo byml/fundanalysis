@@ -20,9 +20,9 @@
 
 	<!-- scans the classpath for annotated components (including @Repostory 
 		and @Service that will be auto-registered as Spring beans -->
-	<context:component-scan base-package="net.byml.*" />
+	<context:component-scan base-package="net.byml.**" />
 
-	<jpa:repositories base-package="net.byml.*.repository" />
+	<jpa:repositories base-package="net.byml.**.repository" />
 
 	<!-- methods or classes needing to run in a complete transaction will be 
 		annotated with Transactional -->
