@@ -37,6 +37,7 @@ public class Fund implements Serializable {
 	private String fullName;
 	@Column(name = "short_name")
 	private String shortName;
+
 	@ManyToOne
 	@JoinColumn(name = "fund_type_id")
 	private FundType fundType;

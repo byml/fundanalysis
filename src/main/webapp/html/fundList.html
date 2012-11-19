@@ -21,11 +21,11 @@
 	function addrow() {		
 		$("#MyPopWindow").window({
 			title : 'Create Fund Type',
-			href : 'fundTypeForm.html',
+			href : 'fundForm.html',
 			width : 300,
 			height : 250,
 			onLoad : function() {
-				$('#fundTypeForm').form('clear');
+				$('#fundForm').form('clear');
 			}
 		});
 	}
@@ -42,13 +42,14 @@
 			$.messager.alert('提示', "只能选择一位用户进行更新", 'info');
 			return;
 		}
+		alert(rows[0].fundType.id);
 		$("#MyPopWindow").window({
 			title : 'Edit Fund Type',
-			href : 'fundTypeForm.html',
+			href : 'fundForm.html',
 			width : 300,
 			height : 250,
 			onLoad : function() {
-				$('#fundTypeForm').form('load', rows[0]);
+				$('#fundForm').form('load', rows[0]);
 			}
 		});
 	}
@@ -66,7 +67,7 @@
 					else
 						ps += "&uid=" + n.id;
 				});
-				$.post('fundType/delete' + ps, function(data) {
+				$.post('fund/delete' + ps, function(data) {
 					$('#queryTable').datagrid('reload');
 					$.messager.alert('提示', data.mes, 'info');
 				});
@@ -75,30 +76,44 @@
 	}
 
 	function save(){
-			var r = $('#fundTypeForm').form('validate');
-			if(!r) {
-				return false;
-			}
-			$.post("fundType/save",$("#fundTypeForm").serializeArray(),function(data){
-				$('#MyPopWindow').window('close');
-				$('#queryTable').datagrid('reload');  
-				$.messager.alert('提示',data.mes,'info');
-			});
+		var r = $('#fundForm').form('validate');
+		if(!r) {
+			return false;
 		}
+		$.post("fund/save",$("#fundForm").serializeArray(),function(data){
+			$('#MyPopWindow').window('close');
+			$('#queryTable').datagrid('reload');  
+			$.messager.alert('提示',data.mes,'info');
+		});
+	}
+
+	function formatPrice(value, row, index){ 
+		if(value!=null){			 
+			return '<span style="color:red;">('+value.name+')</span>';  
+		}
+		
+    }  
  
+ 
+		function loaddata2(){
+			$('#fundForm').form('load',{"shortName":"ffffffffffff","fundType":{"name":"股票型","id":9,"code":"GPX"},"closed":null,"yieldAgreed":null,"floorTrade":null,"id":12,"fullName":"fullName sf","code":"cc3","fundType.id":'9'});
+		}
 	</script>
 
 </head>
 <body>	
 	<table id="queryTable" class="easyui-datagrid" style="width:600px;height:250px"  
-            url="fundType/queryList"  
-            title="List Fund Type" iconCls="icon-save"
+            url="fund/queryList"  
+            title="List Fund Type" iconCls="icon-save" pagination="true"
 			rownumbers="true"  singleSelec="true" toolbar="#tb">  
         <thead>  
             <tr>  
                 <th field="id" checkbox="true">ID</th>  
                 <th field="code">Code</th>  
-                <th field="name">Name</th>   
+                <th field="fullName">Full Name</th>  
+				<th field="shortName">Short Name</th>   
+				<th field="fundType" formatter="function s(value, row, index) { if(value!=null){return value['code']}};s;">Fund Type</th> 
+				<th field="fundType.name" formatter="function s(value, row, index) {if(row.fundType!=null){return row.fundType.name;}};s;">Fund Type</th> 
             </tr>  
         </thead>  
     </table>  

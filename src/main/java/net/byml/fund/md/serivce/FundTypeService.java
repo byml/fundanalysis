@@ -1,5 +1,7 @@
 package net.byml.fund.md.serivce;
 
+import java.util.List;
+
 import net.byml.fund.md.model.FundType;
 
 public interface FundTypeService {
@@ -10,4 +12,8 @@ public interface FundTypeService {
 	public Iterable<FundType> findAll();
 
 	public void save(FundType fundType);
+
+	public void delete(FundType fundType);
+
+	public void delete(List<Long> id);
 }

@@ -1,12 +1,14 @@
 package net.byml.fund.md.serivce.impl;
 
+import java.util.Iterator;
+import java.util.List;
+
 import net.byml.fund.md.model.FundType;
 import net.byml.fund.md.repository.FundTypeRepository;
 import net.byml.fund.md.serivce.FundTypeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service("fundTypeService")
 public class FundTypeServiceImpl implements FundTypeService {
@@ -29,4 +31,15 @@ public class FundTypeServiceImpl implements FundTypeService {
 		repository.save(fundType);
 	}
 
+	public void delete(FundType fundType) {
+		repository.delete(fundType);
+	}
+
+	public void delete(List<Long> ids) {
+		//repository.delete(repository.findAll(ids));
+		for (Iterator<Long> it = ids.iterator(); it.hasNext();) {
+			Long id = it.next();
+			repository.delete(id);
+		}
+	}
 }

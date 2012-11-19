@@ -1,6 +1,11 @@
 package net.byml.fund.md.serivce;
 
+import java.util.List;
+
 import net.byml.fund.md.model.Fund;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface FundService {
 	Fund findById(Long id);
@@ -24,4 +29,8 @@ public interface FundService {
 	void save(Fund fund);
 
 	Iterable<Fund> findAll();
+	
+	Page<Fund> findByQuery(Pageable pageable) ;
+
+	void delete(List<Long> uid);
 }

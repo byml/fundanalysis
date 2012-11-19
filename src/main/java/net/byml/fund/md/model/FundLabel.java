@@ -10,12 +10,13 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "fund_type")
-public class FundType {
+@Table(name = "fund_label")
+public class FundLabel {
 	@Id
 	@GeneratedValue
-	@Column(name="fund_type_id")	
+	@Column(name = "fund_label_id")
 	private Long id;
 	private String code;
-	private String name;		
+	private String name;
+
 }
